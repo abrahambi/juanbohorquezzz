@@ -12,13 +12,7 @@ export const useTranslations = () => {
     if (storedLocale && storedLocale in LOCALES) {
       locale.value = storedLocale;
     } else {
-      const preferredLocale = navigator.language.split("-")[0] as Locale;
-
-      if (preferredLocale in LOCALES) {
-        locale.value = preferredLocale;
-      } else {
-        locale.value = "en";
-      }
+      locale.value = "es";
     }
   });
 
