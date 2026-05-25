@@ -8,7 +8,12 @@ import type { Locale } from "../types";
 
 export const useTranslations = () => {
   onMounted(() => {
-    const storedLocale = window.localStorage.getItem("portfolio-locale") as Locale;
+    let storedLocale = null;
+    try {
+      storedLocale = window.localStorage.getItem("portfolio-locale") as Locale;
+    } catch (e) {
+      console.warn("localStorage is blocked, defaulting language.");
+    }
     if (storedLocale && storedLocale in LOCALES) {
       locale.value = storedLocale;
     } else {
@@ -18,7 +23,9 @@ export const useTranslations = () => {
 
   watch(locale, () => {
     if (!locale.value) return;
-    window.localStorage.setItem("portfolio-locale", locale.value);
+    try {
+      window.localStorage.setItem("portfolio-locale", locale.value);
+    } catch (e) {}
   });
 
   watch(
